@@ -154,4 +154,37 @@ function cmt-make-all(){
  
 }
  
+function de-job(){
+
+   local job=$@
+  # echo $job
+   for c in $job
+   do
+     #echo $c
+     id=$(hep_q -u | awk '{print $1,$9}'| grep $c | awk '{print $1}')
+     commad=$(hep_q -u | awk '{print $1,$9}'| grep $c | awk '{print $2}')
+     echo  "these jobs will be delete! "
+     echo  $commad  
+     read -p "are you sure delete?(y/n) " flag
+ 
+     if [ $flag != "y" ] 
+     then
+        echo "ok! we pass these files!"
+        break
+     fi    
+
+       
+    # echo $id
+     for j in $id
+     do
+       # echo $j
+        hep_rm $j
+     done
+   echo $commad " have/has been delete!!"
+   done
+ 
+ 
+}
+
+
 
