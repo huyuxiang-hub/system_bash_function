@@ -239,14 +239,15 @@ function j-set(){
 
 }
 
+
 function git-info(){
 echo "********************************************************************
           
                                                                          "
-echo "Personal access tokens:   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 
+echo "Personal access tokens:  $PAT 
+ 
              
                                                                    "
-export PAT="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"
 
 
 echo -n "****************************************************************"
@@ -261,7 +262,7 @@ echo "case2:  git remote set-url origin https://<your token>@github.com/huyuxian
 echo "******************************************************************************************************"
 git -h
 }
-export PAT="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"
+
 
 
 function svn-info(){
