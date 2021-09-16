@@ -33,6 +33,7 @@ function rm(){
 
 }
 
+
  
  function create_alg(){
   
@@ -94,7 +95,13 @@ function data_ana(){
 }
 
 function print_file_num(){
+'''
+usage:
+[14:29:09][lxslc714.ihep.ac.cn]~/junofs/juno_centos7 % print_file_num
+data  501
+offline  11161
 
+'''
 cur_dir=`pwd`
 file=$(ls -l | grep "^d" | awk '{print $9}')
 
@@ -116,13 +123,18 @@ function cmt-make(){
 }
 function tds-cmd(){
 
-  echo "this is version 1:  gamma : python $TUTORIALROOT/share/tut_detsim.py  --evtmax 10 gun --positions 0 0 0 --particles gamma  --momentums 1.0 --directions 1 0 0"
-  echo "this is version 2:  protondecay : python $TUTORIALROOT/share/tut_detsim.py --evtmax 10  gun --particles e+ pi0 --momentums 400 400 --positions 0 0 0 0 0 0 --directions 1 0 0 -1 0 0 "
-  echo "this is version 3: ibd :python $TUTORIALROOT/share/tut_detsim.py --evtmax 10 hepevt --exe IBD --volume pTarget --material LS "
+  echo "this is version 1:"
+  type gamma
+  echo "this is version 2:" 
+  type protondecay 
+  echo "this is version 3:"
+  type ibd 
+  echo "this is version 4:"
+  type atm
 }
 
 function gamma(){
-  python $TUTORIALROOT/share/tut_detsim.py  --evtmax 10 gun --positions 0 0 0 --particles gamma  --momentums 1.0 --directions 1 0 0
+  python $TUTORIALROOT/share/tut_detsim.py  --output det_sample.root --user-output det_sample_user.root  --evtmax 10 gun --positions 0 0 0 --particles gamma  --momentums 1.0 --directions 1 0 0
 }
 
 function protondecay(){
@@ -132,6 +144,15 @@ function protondecay(){
 function ibd(){
    python $TUTORIALROOT/share/tut_detsim.py --evtmax 10 hepevt --exe IBD --volume pTarget --material LS
 }
+
+function atm(){
+   python $TUTORIALROOT/share/tut_detsim.py --output ./output/sample_1.root --user-output ./user_output/detsim_user-2.root --anamgr-normal-hit  --evtmax 1  gun --particles e+ neutron --momentums 1037 200 --positions 0 0 0 0 0 0 --directions -0.230676 0.062337 1.009463 -0.055690 0.191069 -0.020458
+
+}
+function atm-mu(){
+   python $TUTORIALROOT/share/tut_detsim.py  --no-optical  --output ./output/sample_2.root --user-output ./user_output/sample_user_2.root --evtmax 1 hepevt --file atmgen_mu.txt  --global-position 0 0 0
+}
+
 
 function offline-info(){
  
@@ -156,6 +177,10 @@ function cmt-make-all(){
  
 function de-job(){
 
+ # usage:de-job run_7.sh
+ #       de-job 'run_7*'
+ #       de-job  'run_7\+'
+
    local job=$@
   # echo $job
    for c in $job
@@ -170,7 +195,7 @@ function de-job(){
      if [ $flag != "y" ] 
      then
         echo "ok! we pass these files!"
-        break
+        continue
      fi    
 
        
@@ -185,6 +210,49 @@ function de-job(){
  
  
 }
+function lfs-info(){
 
+  lfs quota -h /scratchfs/
+  lfs quota -h /junofs/
+  #lfs quota -h /afs/
+  lfs quota -h /workfs2/
+
+}
+
+function j-set(){
+   echo "we have follow juno offline:
+         juno_centos7        ::  1
+         juno_centos7_v2     ::  2
+         trunk               ::  3 "
+   JUNOFS=/junofs/users/huyuxiang/
+   read -p "which one do you want to chose? please input corresponding number:" version
+   case $version in
+   1)
+        source $JUNOFS/juno_centos7/bashrc ;;
+   2)
+        source $JUNOFS/juno_centos7_v2/bashrc ;;
+   3)
+        source $JUNOFS/trunk/bashrc;;
+   *)
+        echo "Warning! you didn't choose a right number !!!"
+   esac
+
+}
+
+function git-info(){
+
+echo "Personal access tokens:   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 "
+
+echo "usage:  git add <filename>"
+echo "        git commit .      "
+echo "        git push origin master " 
+
+echo "**********************How to use Personal access tokens***************"
+echo "case1:  git clone https://<your token>@github.com/huyuxiang-hub/proton-decay-ana.git"
+echo "case2:  git remote set-url origin https://<your token>@github.com/huyuxiang-hub/system_bash_function.git"
+
+
+
+}
 
 
