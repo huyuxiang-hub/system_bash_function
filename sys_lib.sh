@@ -240,8 +240,16 @@ function j-set(){
 }
 
 function git-info(){
+echo "********************************************************************
+          
+                                                                         "
+echo "Personal access tokens:   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 
+             
+                                                                   "
+export PAT="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"
 
-echo "Personal access tokens:   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 "
+
+echo -n "****************************************************************"
 
 echo "usage:  git add <filename>"
 echo "        git commit .      "
@@ -250,9 +258,28 @@ echo "        git push origin master "
 echo "**********************How to use Personal access tokens***************"
 echo "case1:  git clone https://<your token>@github.com/huyuxiang-hub/proton-decay-ana.git"
 echo "case2:  git remote set-url origin https://<your token>@github.com/huyuxiang-hub/system_bash_function.git"
+echo "******************************************************************************************************"
+git -h
+}
+export PAT="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"
 
 
+function svn-info(){
+
+echo "usage of svn:
+**********************
+     svn up
+     svn add <file name>
+     svn ci -m \"your commit about the code\"
+***********************************
+     svn co <website>  -r version_id
+************************************
+     svn diff
+*************************************
+     svn delete <filename>
+**************************************
+
+ "
+svn -h
 
 }
-
-
